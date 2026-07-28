@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/app:z
     ports:
-      - "80:8000"
+      - "8000:8000"
     environment:
       - DB_CONNECTION=pgsql
       - DB_HOST=postgres
