@@ -1,0 +1,91 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: edubridge_app
+    restart: unless-stopped
+    working_dir: /app
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    volumes:
+      - .:/app:z
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=edubridge
+      - DB_USERNAME=edubridge
+      - DB_PASSWORD=secret
+      - REDIS_HOST=redis
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: edubridge_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: edubridge
+      POSTGRES_USER: edubridge
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init-vector.sql:/docker-entrypoint-initdb.d/init-vector.sql:z
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U edubridge -d edubridge"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: edubridge_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  adminer:
+    image: adminer:latest
+    container_name: edubridge_adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+
+  reverb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: edubridge_reverb
+    restart: unless-stopped
+    command: tail -f /dev/null
+    volumes:
+      - .:/app:z
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app
+      - redis
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: edubridge_queue
+    restart: unless-stopped
+    command: php artisan queue:work --tries=3 --timeout=90
+    volumes:
+      - .:/app:z
+    depends_on:
+      - app
+      - postgres
+      - redis
+
+volumes:
+  pgdata:
