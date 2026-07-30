@@ -28,21 +28,21 @@ class CreateStudent
             }
 
             $user = User::create([
-                'full_name'   => $request->input('full_name'),
-                'email'       => $request->input('email'),
-                'password'    => Hash::make($request->input('password')),
-                'role'        => 'student',
+                'full_name' => $request->input('full_name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'role' => 'student',
                 'avatar_path' => $avatarPath,
             ]);
 
             Student::create([
-                'user_id'          => $user->id,
-                'student_number'   => 'STU-' . strtoupper(Str::random(8)),
-                'grade_level'      => $request->input('grade_level'),
-                'class_section'    => $request->input('class_section'),
-                'school_name'      => $request->input('school_name'),
-                'birthday'         => $request->input('birthday'),
-                'guardian_name'    => $request->input('guardian_name'),
+                'user_id' => $user->id,
+                'student_number' => 'STU-'.strtoupper(Str::random(8)),
+                'grade_level' => $request->input('grade_level'),
+                'class_section' => $request->input('class_section'),
+                'school_name' => $request->input('school_name'),
+                'birthday' => $request->input('birthday'),
+                'guardian_name' => $request->input('guardian_name'),
                 'guardian_contact' => $request->input('guardian_contact'),
             ]);
 
@@ -52,9 +52,9 @@ class CreateStudent
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return [
-            'user'         => new AuthUserResource($user->load('student')),
+            'user' => new AuthUserResource($user->load('student')),
             'access_token' => $token,
-            'token_type'   => 'Bearer',
+            'token_type' => 'Bearer',
         ];
     }
 }

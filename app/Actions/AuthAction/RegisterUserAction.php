@@ -29,7 +29,7 @@ class RegisterUserAction
         return match ($role) {
             'student' => $this->registerStudent($request),
             'teacher' => $this->registerTeacher($request),
-            default   => throw new \InvalidArgumentException('Invalid role specified. Role must be "student" or "teacher".'),
+            default => throw new \InvalidArgumentException('Invalid role specified. Role must be "student" or "teacher".'),
         };
     }
 

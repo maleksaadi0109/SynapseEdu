@@ -18,7 +18,7 @@ class RegisterStudentRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        if ($this->has("email")) {
+        if ($this->has('email')) {
             $this->merge([
                 'email' => strtolower($this->input('email')),
             ]);
@@ -28,6 +28,7 @@ class RegisterStudentRequest extends FormRequest
             'role' => 'student',
         ]);
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -38,7 +39,7 @@ class RegisterStudentRequest extends FormRequest
         return [
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required','confirmed',Password::defaults()],
+            'password' => ['required', 'confirmed', Password::defaults()],
             'role' => ['required', 'string', 'in:student'],
             'avatar_path' => ['nullable', 'image', 'file', 'max:2048'],
             'grade_level' => ['required', 'string', 'max:255'],
@@ -46,7 +47,7 @@ class RegisterStudentRequest extends FormRequest
             'school_name' => ['nullable', 'string', 'max:255'],
             'birthday' => ['nullable', 'date'],
             'guardian_name' => ['nullable', 'string', 'max:255'],
-            'guardian_contact' => ['nullable', 'string', 'max:255',"regex:/^\+?[0-9\s\-\(\)]{7,20}$/"],
+            'guardian_contact' => ['nullable', 'string', 'max:255', "regex:/^\+?[0-9\s\-\(\)]{7,20}$/"],
         ];
     }
 }

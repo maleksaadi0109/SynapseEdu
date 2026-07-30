@@ -30,31 +30,32 @@ class CreateTeacher
             }
 
             $user = User::create([
-                'full_name'   => $request->input('full_name'),
-                'email'       => $request->input('email'),
-                'password'    => bcrypt($request->input('password')),
-                'role'        => 'teacher',
+                'full_name' => $request->input('full_name'),
+                'email' => $request->input('email'),
+                'password' => bcrypt($request->input('password')),
+                'role' => 'teacher',
                 'avatar_path' => $avatarPath,
             ]);
 
             Teacher::create([
-                'user_id'        => $user->id,
-                'teacher_number' => $request->input('teacher_number') ?? ('TCH-' . strtoupper(Str::random(8))),
-                'department'     => $request->input('department'),
+                'user_id' => $user->id,
+                'teacher_number' => $request->input('teacher_number') ?? ('TCH-'.strtoupper(Str::random(8))),
+                'department' => $request->input('department'),
                 'specialization' => $request->input('specialization') ?? $request->input('subject'),
-                'qualification'  => $request->input('qualification'),
-                'school_name'    => $request->input('school_name'),
-                'bio'            => $request->input('bio'),
+                'qualification' => $request->input('qualification'),
+                'school_name' => $request->input('school_name'),
+                'bio' => $request->input('bio'),
             ]);
+
             return $user;
         });
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return [
-            'user'         => new AuthUserResource($user->load('teacher')),
+            'user' => new AuthUserResource($user->load('teacher')),
             'access_token' => $token,
-            'token_type'   => 'Bearer',
+            'token_type' => 'Bearer',
         ];
     }
 }

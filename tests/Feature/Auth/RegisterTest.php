@@ -2,15 +2,14 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\User;
-use Faker\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      */
