@@ -26,9 +26,9 @@ return new class extends Migration
             $table->string('school_name')->nullable();
 
             // Personal & Guardian Contact
-            $table->date('date_of_birth')->nullable();
+            $table->date('birthday')->nullable();
             $table->string('guardian_name')->nullable();
-            $table->string('guardian_phone')->nullable();
+            $table->string('guardian_contact')->nullable();
 
             // Offline Sync Versioning & Preferences
             $table->enum('sync_preference', ['wifi_only', 'any_network'])->default('wifi_only');

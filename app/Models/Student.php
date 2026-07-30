@@ -23,9 +23,9 @@ class Student extends Model
         'grade_level',
         'class_section',
         'school_name',
-        'date_of_birth',
+        'birthday',
         'guardian_name',
-        'guardian_phone',
+        'guardian_contact',
         'sync_preference',
         'sync_version',
         'learning_preference',
@@ -39,7 +39,7 @@ class Student extends Model
     protected function casts(): array
     {
         return [
-            'date_of_birth' => 'date',
+            'birthday' => 'date',
             'sync_version' => 'integer',
         ];
     }
