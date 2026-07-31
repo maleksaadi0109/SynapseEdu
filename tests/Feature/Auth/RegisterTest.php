@@ -31,28 +31,7 @@ class RegisterTest extends TestCase
         $response = $this->postJson('/api/register', $payload);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'message',
-            'access_token',
-            'token_type',
-            'data' => [
-                'id',
-                'full_name',
-                'email',
-                'role',
-                'avatar_path',
-                'profile' => [
-                    'id',
-                    'user_id',
-                    'grade_level',
-                    'class_section',
-                    'school_name',
-                    'birthday',
-                    'guardian_name',
-                    'guardian_contact',
-                ],
-            ],
-        ]);
+        $response->assertJsonStructure(array_merge(['message'], $this->StudentResponse('data')));
     }
 
     public function test_create_teacher(): void
@@ -72,28 +51,7 @@ class RegisterTest extends TestCase
         $response = $this->postJson('/api/register', $payload);
 
         $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'message',
-            'access_token',
-            'token_type',
-            'data' => [
-                'id',
-                'full_name',
-                'email',
-                'role',
-                'avatar_path',
-                'profile' => [
-                    'id',
-                    'user_id',
-                    'teacher_number',
-                    'department',
-                    'specialization',
-                    'qualification',
-                    'school_name',
-                    'bio',
-                ],
-            ],
-        ]);
+        $response->assertJsonStructure(array_merge(['message'], $this->TeacherResponse('data')));
     }
 
     public function test_register_with_existing_email(): void
