@@ -38,7 +38,7 @@ class SendResetPasswordLinkTest extends TestCase
 
     public function test_fails_when_email_is_not_registered(): void
     {
-        NOtification::fake();
+        Notification::fake();
         $response = $this->postJson('/api/forgot-password', [
             'email' => 'malek@gamil.com']);
 

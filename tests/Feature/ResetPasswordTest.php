@@ -3,20 +3,20 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
+use Tests\TestCase;
 
 class ResetPasswordTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      */
-    public function test_Reset_Password(): void
+    public function test_reset_password(): void
     {
         Notification::fake();
 
@@ -34,7 +34,7 @@ class ResetPasswordTest extends TestCase
             'password_confirmation' => 'newpassword',
         ]);
 
-        $response->assertStatus(200)->assertJsonStructure([ 'message',]);
+        $response->assertStatus(200)->assertJsonStructure(['message']);
         $this->assertTrue(Hash::check('newpassword', $user->fresh()->password));
     }
 
@@ -55,7 +55,6 @@ class ResetPasswordTest extends TestCase
         $response->assertStatus(422);
         $this->assertTrue(Hash::check('password', $user->fresh()->password));
     }
-
 
     public function test_fails_when_password_confirmation_does_not_match()
     {
