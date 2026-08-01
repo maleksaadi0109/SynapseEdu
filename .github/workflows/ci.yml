@@ -75,6 +75,11 @@ jobs:
           echo "DB_USERNAME=edubridge" >> .env.testing
           echo "DB_PASSWORD=secret" >> .env.testing
           echo "REDIS_HOST=127.0.0.1" >> .env.testing
+          echo "SESSION_DRIVER=array" >> .env.testing
+          echo "CACHE_STORE=array" >> .env.testing
+          echo "QUEUE_CONNECTION=sync" >> .env.testing
+          echo "MAIL_MAILER=array" >> .env.testing
+
 
       - name: Generate Application Key
         run: php artisan key:generate --env=testing
