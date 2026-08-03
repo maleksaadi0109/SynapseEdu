@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CourseController;
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/register', function () {
@@ -18,6 +19,9 @@ Route::get('/login', function () {
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset');
 
+Route::post('/courses', [CourseController::class, 'store'])->middleware('auth:sanctum');
+
 Route::get('/user', function (Request $request) {
+
     return $request->user();
 })->middleware('auth:sanctum');
