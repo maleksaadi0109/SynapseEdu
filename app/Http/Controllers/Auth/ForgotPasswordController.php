@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Auth\ResetPasswordAction;
 use App\Auth\SendResetLinkEmailAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPassowrdRequest;
 use App\Http\Requests\ResetPasswordRequest;
 
