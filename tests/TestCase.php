@@ -2,10 +2,10 @@
 
 namespace Tests;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use App\Models\User;
-use App\Models\Teacher;
 use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\User;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -59,6 +59,7 @@ abstract class TestCase extends BaseTestCase
             'token_type',
         ];
     }
+
     public function LoginWithTeacher(): Teacher
     {
         $user = User::factory()->create([
@@ -84,7 +85,8 @@ abstract class TestCase extends BaseTestCase
         ];
 
         $this->postJson('/api/login', $payload);
-        return $teacher ;
+
+        return $teacher;
 
     }
 
@@ -113,6 +115,7 @@ abstract class TestCase extends BaseTestCase
         ];
 
         $this->postJson('/api/login', $payload);
+
         return $student;
     }
 }

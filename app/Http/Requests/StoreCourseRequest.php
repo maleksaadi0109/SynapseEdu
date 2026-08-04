@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Course;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Course;
 
 class StoreCourseRequest extends FormRequest
 {
@@ -13,7 +13,7 @@ class StoreCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', Course::class) ?? false ;
+        return $this->user()->can('create', Course::class) ?? false;
     }
 
     /**

@@ -2,10 +2,9 @@
 
 namespace App\Lesson;
 
+use App\Http\Requests\StoreLessonRequest;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Http\Resources\LessonResource;
-use App\Http\Requests\StoreLessonRequest;
 
 class CreateLessonAction
 {
@@ -29,5 +28,4 @@ class CreateLessonAction
 
         return $lesson;
     }
-
 }

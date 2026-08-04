@@ -2,25 +2,25 @@
 
 namespace Tests\Feature;
 
+use App\Http\Resources\LessonResource;
+use App\Models\Course;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
-use App\Models\Course;
-use App\Models\Teacher;
-use App\Http\Resources\LessonResource;
-use App\Models\Student;
 
 class CreateLessonTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      */
     public function test_create_lesson(): void
     {
         $teacher = $this->LoginWithTeacher();
-        $course =   Course::factory()->create([
+        $course = Course::factory()->create([
             'teacher_id' => $teacher->id,
         ]);
         Sanctum::actingAs($teacher->user);
@@ -75,7 +75,6 @@ class CreateLessonTest extends TestCase
         $response->assertStatus(403);
     }
 
-
     public function test_create_lesson_required_fields(): void
     {
         $teacher = $this->LoginWithTeacher();
@@ -114,8 +113,6 @@ class CreateLessonTest extends TestCase
         $response->assertJsonValidationErrors(['order_index']);
     }
 
-
-
     public function test_studet_can_not_create_lesson(): void
     {
         $teacher = $this->LoginWithTeacher();
@@ -150,7 +147,7 @@ class CreateLessonTest extends TestCase
             'order_index' => 1,
         ];
 
-        $response = $this->postJson("/api/courses/9999/lessons", $payload);
+        $response = $this->postJson('/api/courses/9999/lessons', $payload);
         $response->assertStatus(404); // Course not found
     }
 }

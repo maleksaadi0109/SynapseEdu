@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Lesson;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Lesson;
-use App\Models\Course;
 
 class StoreLessonRequest extends FormRequest
 {
@@ -15,10 +14,11 @@ class StoreLessonRequest extends FormRequest
     public function authorize(): bool
     {
         $course = $this->route('course');
-        if (!$course) {
+        if (! $course) {
             return false;
         }
-        return $this->user()->can('create', [Lesson::class,$course]) ?? false ;
+
+        return $this->user()->can('create', [Lesson::class, $course]) ?? false;
     }
 
     /**
@@ -29,7 +29,7 @@ class StoreLessonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'course_id' => ['required', 'string','exists:courses,id'],
+            'course_id' => ['required', 'string', 'exists:courses,id'],
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
             'order_index' => ['nullable', 'integer', 'min:0'],

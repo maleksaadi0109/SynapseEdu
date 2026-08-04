@@ -2,10 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\User;
-use App\Models\Lesson;
 use App\Models\Course;
-use Illuminate\Auth\Access\Response;
+use App\Models\Lesson;
+use App\Models\User;
 
 class LessonPolicy
 {
@@ -36,6 +35,7 @@ class LessonPolicy
         if ($user->role === 'teacher' && $user->teacher !== null) {
             return $user->teacher->id === $course->teacher_id;
         }
+
         return false;
     }
 

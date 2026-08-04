@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Http\Resources\CourseResource;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -92,6 +92,4 @@ class CreateCourseTest extends TestCase
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['teacher_id']);
     }
-
-
 }

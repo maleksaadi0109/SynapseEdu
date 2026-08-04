@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LessonResource;
 use App\Http\Requests\StoreLessonRequest;
+use App\Http\Resources\LessonResource;
 use App\Lesson\CreateLessonAction;
 use App\Models\Course;
 
@@ -13,7 +13,6 @@ class LessonController extends Controller
     {
 
         $lesson = $createLessonAction->handle($request, $course);
-
 
         return response()->json([
             'message' => 'Lesson created successfully',

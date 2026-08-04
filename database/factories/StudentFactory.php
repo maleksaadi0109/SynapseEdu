@@ -20,10 +20,10 @@ class StudentFactory extends Factory
     {
         return [
             'user_id' => User::factory(['role' => 'student']),
-            'student_number' => 'STU-' . fake()->unique()->numberBetween(10000, 99999),
+            'student_number' => 'STU-'.fake()->unique()->numberBetween(10000, 99999),
             'grade_level' => (string) fake()->numberBetween(1, 12),
             'class_section' => fake()->randomElement(['A', 'B', 'C', 'D']),
-            'school_name' => fake()->company() . ' High School',
+            'school_name' => fake()->company().' High School',
             'birthday' => fake()->date('Y-m-d', '-15 years'),
             'guardian_name' => fake()->name(),
             'guardian_contact' => fake()->phoneNumber(),

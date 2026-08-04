@@ -20,11 +20,11 @@ class TeacherFactory extends Factory
     {
         return [
             'user_id' => User::factory(['role' => 'teacher']),
-            'teacher_number' => 'TEA-' . fake()->unique()->numberBetween(1000, 9999),
+            'teacher_number' => 'TEA-'.fake()->unique()->numberBetween(1000, 9999),
             'department' => fake()->word(),
             'specialization' => fake()->word(),
-            'qualification' => 'B.Sc. ' . fake()->word(),
-            'school_name' => fake()->company() . ' High School',
+            'qualification' => 'B.Sc. '.fake()->word(),
+            'school_name' => fake()->company().' High School',
             'bio' => fake()->sentence(),
             'sync_version' => 0,
         ];
