@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CourseResource extends JsonResource
+class LessonResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,34 +16,28 @@ class CourseResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'course_id' => $this->course_id,
             'title' => $this->title,
-            'description' => $this->description,
-            'code' => $this->code,
-            'teacher_id' => $this->teacher_id,
+            'content' => $this->content,
+            'order_index' => $this->order_index,
             'sync_version' => $this->sync_version,
-            'lessons' => LessonResource::collection($this->whenLoaded('lessons')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+
         ];
     }
 
-    public static function structure(bool $withLessons = false): array
+    public static function structure(): array
     {
-        $structure = [
+        return [
             'id',
+            'course_id',
             'title',
-            'description',
-            'code',
-            'teacher_id',
+            'content',
+            'order_index',
             'sync_version',
             'created_at',
             'updated_at',
         ];
-
-        if ($withLessons) {
-            $structure[] = 'lessons';
-        }
-
-        return $structure;
     }
 }
