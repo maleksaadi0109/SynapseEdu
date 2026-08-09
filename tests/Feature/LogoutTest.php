@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -45,13 +47,15 @@ class LogoutTest extends TestCase
 
     public function test_token_is_revoked_after_logout(): void
     {
-        $teacher = $this->LoginWithTeacher();
-        $token = $teacher->user->createToken('test-token')->plainTextToken;
+        $user = User::factory()->create();
+        $token = $user->createToken('test-token')->plainTextToken;
 
         $response = $this->withHeader('Authorization', 'Bearer '.$token)
             ->postJson('/api/logout');
 
         $response->assertStatus(200);
+
+        Auth::forgetGuards();
 
         $this->withHeader('Authorization', 'Bearer '.$token)
             ->getJson('/api/user')

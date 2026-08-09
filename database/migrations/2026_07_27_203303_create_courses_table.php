@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('code')->nullable();
+            $table->boolean('is_public')->default(true);
 
             // Offline Sync Versioning
             $table->unsignedBigInteger('sync_version')->default(0);

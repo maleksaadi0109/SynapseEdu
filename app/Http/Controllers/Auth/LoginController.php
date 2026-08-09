@@ -10,6 +10,6 @@ class LoginController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        return (new LoginAction())->handle($request);
+        return (new LoginAction)->handle($request);
     }
 }
