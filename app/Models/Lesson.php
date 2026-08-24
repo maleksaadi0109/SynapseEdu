@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Lesson extends Model
 {
-    use HasFactory, HasUlids, SoftDeletes;
+    use HasFactory;
+    use HasUlids;
+    use Searchable;
+    use SoftDeletes;
 
     protected $fillable = [
         'course_id',
@@ -34,5 +38,15 @@ class Lesson extends Model
     public function assignments(): HasMany
     {
         return $this->hasMany(Assignment::class);
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'course_id' => $this->course_id,
+            'title' => $this->title,
+            'content' => $this->content,
+        ];
     }
 }

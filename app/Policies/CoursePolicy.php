@@ -18,4 +18,14 @@ class CoursePolicy
     {
         return $user->role === 'teacher' || $user->role === 'admin';
     }
+
+    public function update(Course $course)
+    {
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        return ($user->role === 'teacher') && ($user->teacher->id === $course->teacher->id);
+
+    }
 }

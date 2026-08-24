@@ -44,6 +44,14 @@ class LessonPolicy
      */
     public function update(User $user, Lesson $lesson): bool
     {
+
+        if ($user->role === 'admin') {
+            return true;
+        }
+        if ($user->role === 'teacher' && $user->teacher !== null) {
+            return $user->teacher->id === $lesson->course->teacher_id;
+        }
+
         return false;
     }
 
@@ -52,6 +60,14 @@ class LessonPolicy
      */
     public function delete(User $user, Lesson $lesson): bool
     {
+
+        if ($user->role === 'admin') {
+            return true;
+        }
+        if ($user->role === 'teacher' && $user->teacher !== null) {
+            return $user->teacher->id === $lesson->course->teacher_id;
+        }
+
         return false;
     }
 
