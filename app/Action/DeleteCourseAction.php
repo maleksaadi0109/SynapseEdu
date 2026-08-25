@@ -2,13 +2,17 @@
 
 namespace App\Action;
 
+use App\Models\Course;
+
 class DeleteCourseAction
 {
     /**
-     * Create a new class instance.
+     * Soft delete a course and increment its sync version.
      */
-    public function __construct()
+    public function handle(Course $course): bool
     {
-        //
+        $course->increment('sync_version');
+
+        return $course->delete();
     }
 }

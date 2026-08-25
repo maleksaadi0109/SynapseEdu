@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Action\DeleteCourseAction;
 use App\Action\GetCourseAction;
 use App\Action\GetCoursesAction;
+use App\Action\UpdateCourseAction;
 use App\Course\CreateCourseAction;
 use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Resources\CourseResource;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -49,6 +53,39 @@ class CourseController extends Controller
                 'data' => new CourseResource($course),
             ],
             201
+        );
+    }
+
+    /**
+     * Update an existing course.
+     */
+    public function update(UpdateCourseRequest $request, Course $course, UpdateCourseAction $action)
+    {
+        $course = $action->handle($request, $course);
+
+        return response()->json(
+            [
+                'message' => 'Course updated successfully',
+                'data' => new CourseResource($course),
+            ],
+            200
+        );
+    }
+
+    /**
+     * Soft delete a course.
+     */
+    public function destroy(Course $course, DeleteCourseAction $action)
+    {
+        $this->authorize('delete', $course);
+
+        $action->handle($course);
+
+        return response()->json(
+            [
+                'message' => 'Course deleted successfully',
+            ],
+            200
         );
     }
 }

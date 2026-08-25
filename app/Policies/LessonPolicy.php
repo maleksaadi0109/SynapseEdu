@@ -9,66 +9,48 @@ use App\Models\User;
 class LessonPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * Admin override: Grant all permissions to admins automatically.
      */
-    public function viewAny(User $user): bool
+    public function before(?User $user, string $ability): ?bool
     {
-        return false;
+        if ($user?->role === 'admin') {
+            return true;
+        }
+
+        return null;
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Determine whether the user can view the lesson.
      */
-    public function view(User $user, Lesson $lesson): bool
+    public function view(?User $user, Lesson $lesson): bool
     {
-        return false;
+        return $lesson->course->is_public
+            || $user?->teacher?->id === $lesson->course->teacher_id;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can create lessons for a course.
      */
     public function create(User $user, Course $course): bool
     {
-        if ($user->role === 'admin') {
-            return true;
-        }
-        if ($user->role === 'teacher' && $user->teacher !== null) {
-            return $user->teacher->id === $course->teacher_id;
-        }
-
-        return false;
+        return $user->role === 'teacher' && $user->teacher?->id === $course->teacher_id;
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can update the lesson.
      */
     public function update(User $user, Lesson $lesson): bool
     {
-
-        if ($user->role === 'admin') {
-            return true;
-        }
-        if ($user->role === 'teacher' && $user->teacher !== null) {
-            return $user->teacher->id === $lesson->course->teacher_id;
-        }
-
-        return false;
+        return $user->role === 'teacher' && $user->teacher?->id === $lesson->course->teacher_id;
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Determine whether the user can delete the lesson.
      */
     public function delete(User $user, Lesson $lesson): bool
     {
-
-        if ($user->role === 'admin') {
-            return true;
-        }
-        if ($user->role === 'teacher' && $user->teacher !== null) {
-            return $user->teacher->id === $lesson->course->teacher_id;
-        }
-
-        return false;
+        return $user->role === 'teacher' && $user->teacher?->id === $lesson->course->teacher_id;
     }
 
     /**
@@ -76,7 +58,7 @@ class LessonPolicy
      */
     public function restore(User $user, Lesson $lesson): bool
     {
-        return false;
+        return $user->role === 'teacher' && $user->teacher?->id === $lesson->course->teacher_id;
     }
 
     /**
